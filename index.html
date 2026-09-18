@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Smriti Sahay — Cognitive Care for NER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">
+      <svg viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="22" fill="var(--amber-tint)"/>
+        <path d="M8 30 L18 16 L26 26 L32 18 L40 30 Z" fill="var(--green)"/>
+        <circle cx="34" cy="13" r="4.2" fill="var(--amber)"/>
+      </svg>
+      <div class="brand-text">
+        <span class="name">Smriti Sahay</span>
+        <span class="sub" data-i18n="tagline">Cognitive care for NER's elders</span>
+      </div>
+    </div>
+    <div class="mode-toggle">
+      <button id="btnPatientMode" class="active" data-i18n="modePatient">Patient</button>
+      <button id="btnProfileMode" data-i18n="modeProfile">Profile</button>
+      <button id="btnScoresMode" data-i18n="modeScores">Scores</button>
+      <button id="btnCaregiverMode" data-i18n="modeCaregiver">Caregiver</button>
+    </div>
+    <div class="top-controls">
+      <div class="offline-badge"><span class="dot"></span><span data-i18n="offline">Offline-ready</span></div>
+      <div class="textsize" aria-label="Text size">
+        <button id="txtSmaller" aria-label="Decrease text size">A−</button>
+        <button id="txtBigger" aria-label="Increase text size">A+</button>
+      </div>
+      <select class="lang" id="langSelect" aria-label="Language">
+        <option value="en">English</option>
+        <option value="as">অসমীয়া</option>
+        <option value="bn">বাংলা</option>
+        <option value="ne">नेपाली</option>
+        <option value="brx">बड़ो</option>
+        <option value="kha">Khasi</option>
+        <option value="lus">Mizo ṭawng</option>
+        <option value="mni">মৈতৈলোন্</option>
+      </select>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <!-- ===================== PATIENT VIEW ===================== -->
+    <section id="patientView" class="view active">
+
+      <div class="hero">
+        <div>
+          <div class="greet" id="greetText">Good morning, Deepika</div>
+          <div class="date" id="dateText"></div>
+          <div class="clock" id="clockText">--:--</div>
+          <div id="heroSeverityBadge"></div>
+        </div>
+        <svg class="hero-art" viewBox="0 0 400 220" fill="none">
+          <path d="M0 170 L60 90 L110 140 L170 60 L230 140 L290 100 L340 150 L400 120 L400 220 L0 220 Z" fill="var(--green)" opacity="0.85"/>
+          <path d="M0 200 L80 150 L150 190 L220 140 L300 185 L400 160 L400 220 L0 220 Z" fill="var(--green-deep)"/>
+          <circle cx="330" cy="55" r="26" fill="var(--amber)"/>
+          <g fill="var(--amber-tint)" opacity="0.9"><circle cx="70" cy="130" r="6"/><circle cx="90" cy="122" r="6"/><circle cx="80" cy="112" r="6"/></g>
+        </svg>
+      </div>
+
+      <div class="section-head">
+        <h2 data-i18n="remindersHead">Today's reminders</h2>
+        <span class="hint" data-i18n="tapDone">Tap when done</span>
+      </div>
+      <div class="reminders" id="remindersList"></div>
+
+      <div class="section-head">
+        <h2 data-i18n="weeklyHead">This week's tasks</h2>
+        <span class="hint" data-i18n="weeklyHint">Family visits, appointments &amp; more</span>
+      </div>
+      <div class="weekly-list" id="weeklyList"></div>
+
+      <div class="section-head">
+        <h2 data-i18n="gamesHead">Cognitive activities</h2>
+        <span class="hint" data-i18n="gamesHint">Choose a level to begin</span>
+      </div>
+      <div class="games" id="gamesGrid"></div>
+
+    </section>
+
+    <!-- ===================== PROFILE VIEW ===================== -->
+    <section id="profileView" class="view">
+      <div class="section-head" style="margin-top:8px;">
+        <h2 data-i18n="profileHead">Patient profile</h2>
+        <span class="hint" data-i18n="profileSub">Bio-data, diagnosis &amp; demographics</span>
+      </div>
+
+      <div class="profile-card">
+        <div class="profile-avatar" id="profileAvatarInitial">D</div>
+        <div>
+          <div class="pname" id="profileCardName">Deepika Devi</div>
+          <div class="pmeta" id="profileCardMeta">68 yrs · Sonapur, Kamrup, Assam</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="form-grid">
+          <div class="form-field"><label data-i18n="profileName">Full name</label><input id="fName" type="text"></div>
+          <div class="form-field"><label data-i18n="profileAge">Age</label><input id="fAge" type="number" min="0" max="120"></div>
+          <div class="form-field"><label data-i18n="profileGender">Gender</label>
+            <select id="fGender"><option value="female" data-i18n="genderF">Female</option><option value="male" data-i18n="genderM">Male</option><option value="other" data-i18n="genderO">Other</option></select>
+          </div>
+          <div class="form-field"><label data-i18n="profileVillage">Village / Town</label><input id="fVillage" type="text"></div>
+          <div class="form-field"><label data-i18n="profileDistrict">District</label><input id="fDistrict" type="text"></div>
+          <div class="form-field"><label data-i18n="profileState">State</label><input id="fState" type="text"></div>
+          <div class="form-field"><label data-i18n="profileContact">Contact number</label><input id="fContact" type="text"></div>
+          <div class="form-field"><label data-i18n="profileEmergency">Emergency contact</label><input id="fEmergency" type="text"></div>
+          <div class="form-field"><label data-i18n="profileSeverity">Dementia severity</label>
+            <select id="fSeverity">
+              <option value="mild" data-i18n="severityMild">Mild</option>
+              <option value="moderate" data-i18n="severityModerate">Moderate</option>
+              <option value="severe" data-i18n="severitySevere">Severe</option>
+            </select>
+          </div>
+          <div class="form-field"><label data-i18n="profileDiagnosisDate">Diagnosis date</label><input id="fDiagnosis" type="date"></div>
+          <div class="form-field"><label data-i18n="profilePreferredLang">Preferred language</label>
+            <select id="fPrefLang">
+              <option value="en">English</option><option value="as">অসমীয়া</option><option value="bn">বাংলা</option>
+              <option value="ne">नेपाली</option><option value="brx">बड़ो</option><option value="kha">Khasi</option>
+              <option value="lus">Mizo ṭawng</option><option value="mni">মৈতৈলোন্</option>
+            </select>
+          </div>
+          <div class="form-field" style="grid-column:1/-1;"><label data-i18n="profileConditions">Known conditions / allergies</label><textarea id="fConditions"></textarea></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn primary" id="saveProfileBtn" data-i18n="profileSave">Save profile</button>
+          <span class="save-toast" id="saveToast" data-i18n="profileSaved">Saved</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SCORES VIEW ===================== -->
+    <section id="scoresView" class="view">
+      <div class="section-head" style="margin-top:8px;">
+        <h2 data-i18n="scoresHead">Scoreboard</h2>
+        <span class="hint" data-i18n="scoresHint">Points build up as activities are completed</span>
+      </div>
+
+      <div class="score-hero">
+        <div><div class="big" id="totalPointsNum">0</div><div class="lbl" data-i18n="totalPoints">Total points</div></div>
+        <div class="score-breakdown" id="scoreBreakdown" style="flex:1;"></div>
+      </div>
+
+      <div class="panel">
+        <h3 data-i18n="recentScores">Recent scores</h3>
+        <table class="log-table">
+          <thead><tr><th data-i18n="logTime">Time</th><th data-i18n="logActivity">Activity</th><th data-i18n="pointsEarned">Points</th></tr></thead>
+          <tbody id="scoreLogBody"></tbody>
+        </table>
+      </div>
+
+      <div class="panel">
+        <h3 data-i18n="tipsHead">Tips to improve scores</h3>
+        <div class="tips-list" id="tipsList"></div>
+      </div>
+
+      <div class="panel">
+        <h3 data-i18n="recommendedHead">Recommended activities</h3>
+        <div class="hint" id="recoSub" style="margin-bottom:8px;"></div>
+        <div class="reco-list" id="recoList"></div>
+      </div>
+    </section>
+
+    <!-- ===================== CAREGIVER VIEW ===================== -->
+    <section id="caregiverView" class="view">
+      <div class="section-head" style="margin-top:8px;">
+        <h2 data-i18n="cgOverview">Patient overview</h2>
+        <span class="hint" data-i18n="cgLastSync">Last synced just now</span>
+      </div>
+
+      <div class="profile-card">
+        <div class="profile-avatar" id="cgAvatarInitial">D</div>
+        <div>
+          <div class="pname" id="cgCardName">Deepika Devi</div>
+          <div class="pmeta" id="cgCardMeta">68 yrs · Mild dementia · Sonapur, Assam</div>
+        </div>
+      </div>
+
+      <div class="cg-grid">
+        <div class="stat-card"><div class="num" id="statStreak">6</div><div class="lbl" data-i18n="cgStreak">Day activity streak</div></div>
+        <div class="stat-card"><div class="num" id="statSessions">0</div><div class="lbl" data-i18n="cgSessions">Sessions today</div></div>
+        <div class="stat-card"><div class="num" id="statCompliance">78%</div><div class="lbl" data-i18n="cgCompliance">Reminder compliance (7d)</div></div>
+        <div class="stat-card"><div class="num" id="statLevel">2</div><div class="lbl" data-i18n="cgLevel">Avg. difficulty level</div></div>
+      </div>
+
+      <div class="panel"><h3 data-i18n="cgChartHead">Weekly cognitive engagement</h3><div class="bar-chart" id="barChart"></div></div>
+      <div class="panel"><h3 data-i18n="cgAlertsHead">Alerts</h3><div id="alertsList"></div></div>
+      <div class="panel">
+        <h3 data-i18n="cgLogHead">Recent activity log</h3>
+        <table class="log-table"><thead><tr><th data-i18n="logTime">Time</th><th data-i18n="logActivity">Activity</th><th data-i18n="logResult">Result</th></tr></thead><tbody id="logBody"></tbody></table>
+      </div>
+      <div class="panel">
+        <h3 data-i18n="cgDifficultyHead">Baseline difficulty</h3>
+        <div class="slider-row"><span data-i18n="easy">Gentle</span><input type="range" min="1" max="3" step="1" id="difficultySlider" value="1"><span data-i18n="hard">Challenging</span></div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<button class="voice-fab" id="voiceFab" aria-label="Read this page aloud">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+    <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line>
+  </svg>
+</button>
+
+<div class="overlay" id="overlay"><div class="modal" id="modalContent"></div></div>
+
+<footer><div class="wrap" data-i18n="footerNote">Smriti Sahay — a prototype cognitive care platform for elderly dementia support across the North Eastern Region. Built for Smart India Hackathon.</div></footer>
+
+<script src="script.js"></script>
+</body>
+</html>
